@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     },
     email:{
         type: String,
-        required: true,
+        unique: true,
     },
     password: {
         type: String,
@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
         default: 0, // 0 for user, 1 for admin,
     },
     cart:{
-        types:Array,
+        type:Array,
         default: [],
     }
 },{

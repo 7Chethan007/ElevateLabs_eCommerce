@@ -1,8 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const cookieParser = require('cookie-parser');
 
 const app = express();
+app.use(express.json());
+app.use(cookieParser());
 
 const PORT = process.env.PORT || 5000;
 
@@ -15,7 +18,8 @@ app.listen(PORT, () => {
 })
 
 
-
+// Routers
+app.use('/user', require('./routes/useRoute'));
 
 
 
@@ -24,11 +28,10 @@ app.listen(PORT, () => {
 
 const URL = process.env.MONGODB_URL;
 
-mongoose.connect(URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() =>{
+mongoose.connect(URL)
+.then(() =>{
     console.log("MongoDB connected successfully");
 }).catch((err) => {
     console.error("MongoDB connection error:", err);
+    process.exit(1);
 });
