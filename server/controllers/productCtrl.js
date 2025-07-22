@@ -1,28 +1,37 @@
-const Products = require('../models/productModel')
 const { query } = require('express');
+const Products = require('../models/productModel')
 
-// Filter,sorting and pagination
+
+//Filter,sorting and pagination
+
 class APIfeatures{
     constructor(query,queryString){
         this.query = query;
         this.queryString = queryString
     }
 
-    filtering(){
-        const queryObj = {...this.queryString} 
+    filtering() {
+        const queryObj = { ...this.queryString };
+        const excludedFields = ['page', 'sort', 'limit'];
+        excludedFields.forEach(el => delete queryObj[el]);
 
+        // Fix for regex and options
+        let mongoQuery = {};
 
-        const excluededFields = ['page','sort','limit']
-        excluededFields.forEach(el => delete(queryObj[el]))
+        for (let key in queryObj) {
+            if (key.includes('[')) {
+                const [field, operator] = key.split(/\[|\]/).filter(Boolean);
+                if (!mongoQuery[field]) mongoQuery[field] = {};
+                mongoQuery[field]['$' + operator] = queryObj[key];
+            } else {
+                mongoQuery[key] = queryObj[key];
+            }
+        }
 
-
-        let queryStr = JSON.stringify(queryObj)
-        queryStr = queryStr.replace(/\b(gte|gt|lt|lte|regex)\b/g, match => '$' + match)
-
-        this.query.find(JSON.parse(queryStr))
-
-        return this
+        this.query = this.query.find(mongoQuery);
+        return this;
     }
+
 
     sorting(){
         if(this.queryString.sort){
