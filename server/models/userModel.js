@@ -15,8 +15,13 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     role:{
-        type: Number,
-        default: 0, // 0 for user, 1 for admin,
+        type: String,
+        enum: ['viewer', 'manager', 'admin'],
+        default: 'viewer', // viewer (analytics only), manager (order/product), admin (full control)
+    },
+    permissions: {
+        type: Array,
+        default: ['view_products']
     },
     cart:{
         type:Array,

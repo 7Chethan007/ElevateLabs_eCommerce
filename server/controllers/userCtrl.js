@@ -1,6 +1,6 @@
 const Users = require('../models/userModel');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const path = require('path');
 const { access } = require('fs/promises');
 const { get } = require('http');
@@ -9,7 +9,12 @@ const { get } = require('http');
 const userCtrl = {
     register: async (req,res) => {
         try {
+            console.log('Register request body:', req.body);
             const {name, email, password} = req.body;
+
+            if (!name || !email || !password) {
+                return res.status(400).json({msg: "Please fill in all fields."});
+            }
 
             const user = await Users.findOne({email});
             if(user) return res.status(400).json({msg: "Email already exists."})
@@ -64,7 +69,12 @@ const userCtrl = {
     },
     login: async(req,res) => {
         try {
+            console.log('Login request body:', req.body);
             const {email, password} = req.body;
+
+            if (!email || !password) {
+                return res.status(400).json({msg: "Please fill in all fields."});
+            }
 
             const user = await Users.findOne({email});
             if(!user) return res.status(400).json({msg: "User does not exist."});
