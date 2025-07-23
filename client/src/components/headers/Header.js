@@ -20,16 +20,28 @@ const Header = () => {
     const [showSearchResults, setShowSearchResults] = useState(false);
 
     const handleSearch = async (searchTerm) => {
-        if (searchTerm.length > 2) {
+        console.log('Header handleSearch called with:', searchTerm);
+        
+        if (searchTerm && searchTerm.length > 2) {
             try {
-                // Simulate search - in real app, make API call
-                const response = await axios.get(`/api/products?search=${searchTerm}`);
+                console.log('Making API call with search term:', searchTerm);
+                const encodedSearchTerm = encodeURIComponent(searchTerm.trim());
+                const apiUrl = `/api/products?search=${encodedSearchTerm}`;
+                console.log('API URL:', apiUrl);
+                
+                const response = await axios.get(apiUrl);
+                console.log('Search API response:', response.data);
+                
                 setSearchResults(response.data.products || []);
                 setShowSearchResults(true);
+                
+                console.log('Search results count:', (response.data.products || []).length);
             } catch (err) {
                 console.error('Search error:', err);
+                console.error('Error details:', err.response ? err.response.data : 'No response data');
             }
         } else {
+            console.log('Search term too short or empty, hiding results');
             setShowSearchResults(false);
         }
     };
@@ -110,27 +122,34 @@ const Header = () => {
     </header>
 
     {/* Search Results Dropdown */}
-    {showSearchResults && searchResults.length > 0 && (
+    {showSearchResults && (
         <div className="search-results-dropdown">
             <div className="search-results-header">
                 <span>Search Results ({searchResults.length})</span>
                 <button onClick={() => setShowSearchResults(false)}>✕</button>
             </div>
             <div className="search-results-list">
-                {searchResults.slice(0, 5).map(product => (
-                    <Link 
-                        key={product._id} 
-                        to={`/detail/${product._id}`}
-                        className="search-result-item"
-                        onClick={() => setShowSearchResults(false)}
-                    >
-                        <img src={product.images.url} alt={product.title} />
-                        <div>
-                            <h4>{product.title}</h4>
-                            <p>${product.price}</p>
-                        </div>
-                    </Link>
-                ))}
+                {searchResults.length > 0 ? (
+                    searchResults.slice(0, 5).map(product => (
+                        <Link 
+                            key={product._id} 
+                            to={`/detail/${product._id}`}
+                            className="search-result-item"
+                            onClick={() => setShowSearchResults(false)}
+                        >
+                            <img src={product.images.url} alt={product.title} />
+                            <div>
+                                <h4>{product.title}</h4>
+                                <p>${product.price}</p>
+                            </div>
+                        </Link>
+                    ))
+                ) : (
+                    <div className="no-results">
+                        <p>No products found matching your search.</p>
+                        <p>Try different keywords or browse our categories.</p>
+                    </div>
+                )}
             </div>
         </div>
     )}

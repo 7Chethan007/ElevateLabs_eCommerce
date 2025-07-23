@@ -26,7 +26,33 @@ ElevateLabs eCommerce is a comprehensive, feature-rich online shopping platform 
 - **Order Tracking**: Real-time order status updates and management
 - **Content Management**: Easy product information and image uploading
 
-## 🛠️ Technology Stack
+## � Screenshots
+
+### Homepage
+![Frontend Homepage](./images/FrontPage.png)
+*Clean, modern homepage showcasing featured products with intuitive navigation*
+
+### Dark Theme
+![Dark Theme Interface](./images/FrontPageDarkTheam.png)
+*Elegant dark mode interface for better viewing experience in low-light conditions*
+
+### Authentication
+![Login & Registration](./images/LoginRegister.png)
+*Secure user authentication with clean login and registration forms*
+
+### Shopping Cart
+![Shopping Cart](./images/Cart.png)
+*Intuitive shopping cart interface with quantity controls and price calculations*
+
+### Product Comparison
+![Product Comparison](./images/ProductComp.png)
+*Side-by-side product comparison feature helping users make informed decisions*
+
+### Analytics Dashboard
+![MongoDB Analytics](./images/MongoStats.png)
+*Comprehensive admin analytics dashboard with real-time data visualization*
+
+## �🛠️ Technology Stack
 
 ### Frontend
 - **React.js**: Frontend library for building user interfaces

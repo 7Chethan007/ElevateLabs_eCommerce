@@ -18,6 +18,21 @@ class APIfeatures{
         // Fix for regex and options
         let mongoQuery = {};
 
+        // Handle search parameter specifically
+        if (queryObj.search) {
+            const searchTerm = queryObj.search;
+            mongoQuery = {
+                $or: [
+                    { title: { $regex: searchTerm, $options: 'i' } },
+                    { description: { $regex: searchTerm, $options: 'i' } },
+                    { content: { $regex: searchTerm, $options: 'i' } },
+                    { category: { $regex: searchTerm, $options: 'i' } }
+                ]
+            };
+            delete queryObj.search;
+        }
+
+        // Process the remaining query parameters
         for (let key in queryObj) {
             if (key.includes('[')) {
                 const [field, operator] = key.split(/\[|\]/).filter(Boolean);
@@ -64,15 +79,26 @@ class APIfeatures{
 const productCtrl = {
     getProducts:async(req,res) => {
         try{
-            console.log(req.query)
-            const features = new APIfeatures(Products.find(),req.query).filtering().sorting().pagination()
+            console.log("Search query:", req.query)
+            
+            // Debug search functionality
+            if (req.query.search) {
+                console.log("Searching for:", req.query.search);
+            }
+            
+            const features = new APIfeatures(Products.find(), req.query).filtering().sorting().pagination()
             const products = await features.query
 
-            res.json({status:'success',
-            result: products.length,
-        products:products})
+            console.log("Found products:", products.length);
+            
+            res.json({
+                status:'success',
+                result: products.length,
+                products:products
+            })
         }
         catch(err){
+            console.error("Error in getProducts:", err);
             return res.status(500).json({msg:err.message})
         }
     },

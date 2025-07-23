@@ -3,21 +3,23 @@
     position: relative;
     width: 100%;
     max-width: 400px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .search-input-wrapper {
     display: flex;
     align-items: center;
-    background: var(--bg-secondary);
-    border: 2px solid var(--border-color);
+    background: var(--bg-secondary, #fff);
+    border: 2px solid var(--border-color, #ddd);
     border-radius: 25px;
     overflow: hidden;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
 
 .search-input-wrapper:focus-within {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-color: var(--accent-color, #4CAF50);
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.2);
 }
 
 .voice-search-input {
@@ -25,8 +27,9 @@
     padding: 12px 20px;
     border: none;
     background: transparent;
-    color: var(--text-primary);
+    color: var(--text-primary, #333);
     font-size: 16px;
+    width: 100%;
 }
 
 .voice-search-input:focus {
@@ -34,7 +37,7 @@
 }
 
 .voice-search-input::placeholder {
-    color: var(--text-muted);
+    color: var(--text-muted, #999);
 }
 
 .voice-btn {
@@ -42,9 +45,12 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    color: var(--text-secondary);
+    color: var(--text-secondary, #666);
     transition: all 0.3s ease;
-    border-left: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color, #ddd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .voice-btn:hover {
@@ -103,6 +109,66 @@
     border-radius: 5px;
     font-size: 12px;
     margin-top: 5px;
+}
+
+.voice-btn.offline {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.voice-error {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #ff4444;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-top: 5px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+}
+
+.voice-error.network-error {
+    background: #3366cc;
+    max-height: none;
+    white-space: normal;
+    padding: 10px;
+}
+
+.error-dismiss-btn,
+.error-retry-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.error-dismiss-btn:hover,
+.error-retry-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.voice-offline {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #666;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-top: 5px;
+    text-align: center;
 }
 
 /* Header Search Styles */
