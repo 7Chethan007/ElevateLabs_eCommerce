@@ -143,8 +143,6 @@ This project successfully demonstrates the ability to conceive, design, and impl
 ---
 
 **Project Repository:** https://github.com/7Chethan007/ElevateLabs_eCommerce  
-**Live Demo:** Available upon request  
-**Contact:** chethan.developer@email.com  
 
 ---
 
