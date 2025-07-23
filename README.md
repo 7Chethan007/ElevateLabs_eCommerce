@@ -1,7 +1,5 @@
 # ElevateLabs eCommerce Platform
 
-![ElevateLabs Logo](https://via.placeholder.com/150x50?text=ElevateLabs)
-
 ## 🚀 Overview
 
 ElevateLabs eCommerce is a comprehensive, feature-rich online shopping platform built using the MERN stack (MongoDB, Express, React, Node.js). The platform offers an intuitive user experience with advanced features like voice search, product comparison, real-time analytics, and robust admin controls. This project demonstrates modern full-stack development practices, focusing on performance, security, and user experience.
